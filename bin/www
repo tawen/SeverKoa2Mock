@@ -13,9 +13,19 @@ var http = require('http');
  */
 
 var port = normalizePort(process.env.PORT || '8892');
-
-// app.set('port', port);
-
+//获取ip地址
+function getIPAdress(){  
+  var interfaces = require('os').networkInterfaces();  
+  for(var devName in interfaces){  
+        var iface = interfaces[devName];  
+        for(var i=0;i<iface.length;i++){  
+             var alias = iface[i];  
+             if(alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal){  
+                   return alias.address;  
+             }  
+        }  
+  }  
+} 
 /**
  * Create HTTP server.
  */
@@ -26,9 +36,10 @@ var server = http.createServer(app.callback());
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port,"192.168.90.37",function(){
+ var ip = getIPAdress();
+server.listen(port,ip,function(){
   console.log("hello,My name is Tawen");
-  console.log("访问地址：192.168.90.37:8892");
+  console.log("访问地址：%s:%d",ip,port);
 });
 server.on('error', onError);
 server.on('listening', onListening);
