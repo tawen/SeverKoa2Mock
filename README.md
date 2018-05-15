@@ -22,5 +22,7 @@ app.use(test.routes(), test.allowedMethods())
 ```
 
 ## 访问地址
-http://192.168.90.37:8892/test/string
+
+http://IP:PORT/test/string
+
 > 项目没有引入热加载，喜欢的同事可以自行添加。
